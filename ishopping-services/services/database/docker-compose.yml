@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: db_ishopping
+    restart: always
+
+    env_file:
+      - .env
+    ports:
+      - "5555:5432"
+    volumes:
+      - ishopping_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  ishopping_postgres_data: {}
