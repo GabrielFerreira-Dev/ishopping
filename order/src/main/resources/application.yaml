@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: orders
+  datasource:
+    url: jdbc:postgresql://localhost:5555/ishoppingorders
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
