@@ -1,5 +1,6 @@
 package com.github.ishopping.order.model;
 
+import com.github.ishopping.order.controller.dto.PaymentDataDTO;
 import com.github.ishopping.order.model.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -43,4 +45,10 @@ public class Order {
 
     @Column(name = "url_invoice")
     private String urlInvoice;
+
+    @Transient
+    private PaymentData paymentData;
+
+    @OneToMany(mappedBy = "orderId")
+    private List<OrderItem> itens;
 }
