@@ -16,6 +16,10 @@ public class OrderService {
     private final OrderValidator orderValidator;
 
 
-    public Order createOrder(Order order) { return null; }
+    public Order createOrder(Order order) {
+        orderRepository.save(order);
+        orderItemRepository.saveAll(order.getItens());
+        return order;
+    }
 
 }
