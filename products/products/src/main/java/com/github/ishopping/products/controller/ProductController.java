@@ -2,7 +2,6 @@ package com.github.ishopping.products.controller;
 
 import com.github.ishopping.products.model.Product;
 import com.github.ishopping.products.service.ProductService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Product> getData(@PathVariable("id") Long id) {
+    public ResponseEntity<Product> getById(@PathVariable("id") Long id) {
         return productService.getById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
