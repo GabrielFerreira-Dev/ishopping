@@ -6,6 +6,7 @@ import com.github.ishopping.order.client.representation.ClientRepresentation;
 import com.github.ishopping.order.client.representation.ProductRepresentation;
 import com.github.ishopping.order.model.Order;
 import com.github.ishopping.order.model.OrderItem;
+import com.github.ishopping.order.model.exception.ValidationException;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,8 @@ public class OrderValidator {
             ClientRepresentation client = response.getBody();
             log.info("Client ID {} found: {}", client.id(), client.name());
         } catch (FeignException.NotFound e) {
-            log.error("Client not found");
+            var message = String.format("Client ID %d not found.", id);
+            throw new ValidationException("clientId", message);
         }
     }
 
@@ -44,7 +46,8 @@ public class OrderValidator {
             ProductRepresentation product = response.getBody();
             log.info("Product ID {} found: {}", product.id(), product.name());
         } catch (FeignException.NotFound e) {
-            log.error("Product not found");
+            var message = String.format("Item ID %d not found.", item.getProductId());
+            throw new ValidationException("productId", message);
         }
     }
 
