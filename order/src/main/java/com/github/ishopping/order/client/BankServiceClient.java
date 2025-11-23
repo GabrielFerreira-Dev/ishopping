@@ -13,6 +13,5 @@ public class BankServiceClient {
     public String requestPayment(Order order) {
         log.info("Requesting payment of ID Order: {}", order.getId());
         return UUID.randomUUID().toString();
-
     }
 }
