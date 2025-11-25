@@ -2,7 +2,10 @@ package com.github.ishopping.order.service;
 
 import com.github.ishopping.order.client.BankServiceClient;
 import com.github.ishopping.order.model.Order;
+import com.github.ishopping.order.model.PaymentData;
 import com.github.ishopping.order.model.enums.OrderStatus;
+import com.github.ishopping.order.model.enums.PaymentType;
+import com.github.ishopping.order.model.exception.ItemNotFoundException;
 import com.github.ishopping.order.repository.OrderItemRepository;
 import com.github.ishopping.order.repository.OrderRepository;
 import com.github.ishopping.order.validator.OrderValidator;
@@ -56,6 +59,30 @@ public class OrderService {
             order.setStatus(OrderStatus.ERROR_PAYMENT);
             order.setObservation(observation);
         }
+        orderRepository.save(order);
+    }
+
+    @Transactional
+    public void addNewPayment(Long id, String data, PaymentType paymentType) {
+        var orderFind = orderRepository.findById(id);
+
+        if (orderFind.isEmpty()) {
+            throw new ItemNotFoundException("Order not found by informed ID.");
+        }
+
+        var order = orderFind.get();
+        PaymentData paymentData = new PaymentData();
+        paymentData.setPaymentType(paymentType);
+        paymentData.setData(data);
+
+        order.setPaymentData(paymentData);
+
+        order.setStatus(OrderStatus.PLACED);
+        order.setObservation("New payment placed, waiting processing.");
+
+        String newPaymentKey = bankServiceClient.requestPayment(order);
+        order.setPaymentKey(newPaymentKey);
+
         orderRepository.save(order);
     }
 }

@@ -1,8 +1,10 @@
 package com.github.ishopping.order.controller;
 
+import com.github.ishopping.order.controller.dto.AddNewPaymentDTO;
 import com.github.ishopping.order.controller.dto.NewOrderDTO;
 import com.github.ishopping.order.controller.mapper.OrderMapper;
 import com.github.ishopping.order.model.ErrorResponse;
+import com.github.ishopping.order.model.exception.ItemNotFoundException;
 import com.github.ishopping.order.model.exception.ValidationException;
 import com.github.ishopping.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,17 @@ public class OrderController {
             return ResponseEntity.ok(newOrder.getId());
         } catch (ValidationException e) {
             var error = new ErrorResponse("Validation error", e.getField(), e.getMessage());
+            return ResponseEntity.badRequest().body(error);
+        }
+    }
+
+    @PostMapping("payment")
+    public ResponseEntity<Object> addNewPayment(@RequestBody AddNewPaymentDTO dto) {
+        try {
+            orderService.addNewPayment(dto.id(), dto.data(), dto.paymentType());
+            return ResponseEntity.noContent().build();
+        } catch (ItemNotFoundException e) {
+            var error = new ErrorResponse("Item not found", "id", e.getMessage());
             return ResponseEntity.badRequest().body(error);
         }
     }
