@@ -1,5 +1,6 @@
 package com.github.ishopping.order.model;
 
+import com.github.ishopping.order.client.representation.ClientRepresentation;
 import com.github.ishopping.order.controller.dto.PaymentDataDTO;
 import com.github.ishopping.order.model.enums.OrderStatus;
 import jakarta.persistence.*;
@@ -53,4 +54,7 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> itens;
+
+    @Transient
+    private ClientRepresentation dataClient;
 }
