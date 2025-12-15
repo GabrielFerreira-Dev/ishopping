@@ -25,3 +25,11 @@ ishopping:
         url: 'http://localhost:8081/products'
       clients:
         url: 'http://localhost:8082/clients'
+
+  config:
+    kafka:
+      server-url: 'http://localhost:29092'
+      topics:
+        orders-paid: 'ishopping.orders-paid'
+        orders-invoiced: 'ishopping.orders-invoiced'
+        orders-shipped: 'ishopping.orders-shipped'
