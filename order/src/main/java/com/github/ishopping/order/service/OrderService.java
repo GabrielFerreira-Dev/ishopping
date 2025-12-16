@@ -119,7 +119,7 @@ public class OrderService {
     }
 
     private void loadProductsData(OrderItem orderItem) {
-        Long id = orderItem.getId();
+        Long id = orderItem.getProductId();
         ResponseEntity<ProductRepresentation> response = apiProducts.getData(id);
         orderItem.setProductName(response.getBody().name());
     }

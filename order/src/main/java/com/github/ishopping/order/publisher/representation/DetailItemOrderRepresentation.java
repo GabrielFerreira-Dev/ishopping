@@ -3,7 +3,7 @@ package com.github.ishopping.order.publisher.representation;
 import java.math.BigDecimal;
 
 public record DetailItemOrderRepresentation(
-        Long idProduct,
+        Long productId,
         String productName,
         Integer quantity,
         BigDecimal unitValue
