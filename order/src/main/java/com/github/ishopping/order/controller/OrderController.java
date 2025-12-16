@@ -4,15 +4,17 @@ import com.github.ishopping.order.controller.dto.AddNewPaymentDTO;
 import com.github.ishopping.order.controller.dto.NewOrderDTO;
 import com.github.ishopping.order.controller.mapper.OrderMapper;
 import com.github.ishopping.order.model.ErrorResponse;
+import com.github.ishopping.order.model.Order;
 import com.github.ishopping.order.model.exception.ItemNotFoundException;
 import com.github.ishopping.order.model.exception.ValidationException;
+import com.github.ishopping.order.publisher.DetailOrderMapper;
+import com.github.ishopping.order.publisher.representation.DetailOrderRepresentation;
 import com.github.ishopping.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("order")
@@ -21,6 +23,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final OrderMapper orderMapper;
+    private final DetailOrderMapper detailOrderMapper;
 
     @PostMapping
     public ResponseEntity<Object> createOrder(@RequestBody NewOrderDTO newOrderDTO) {
@@ -43,5 +46,14 @@ public class OrderController {
             var error = new ErrorResponse("Item not found", "id", e.getMessage());
             return ResponseEntity.badRequest().body(error);
         }
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<DetailOrderRepresentation> getOrderDetails(@PathVariable Long id) {
+        Optional<Order> order = orderService.loadCompleteDataOrder(id);
+        return order
+                .map(detailOrderMapper::map)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
