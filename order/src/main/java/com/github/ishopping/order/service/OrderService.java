@@ -1,7 +1,12 @@
 package com.github.ishopping.order.service;
 
 import com.github.ishopping.order.client.BankServiceClient;
+import com.github.ishopping.order.client.ClientsClient;
+import com.github.ishopping.order.client.ProductsClient;
+import com.github.ishopping.order.client.representation.ClientRepresentation;
+import com.github.ishopping.order.client.representation.ProductRepresentation;
 import com.github.ishopping.order.model.Order;
+import com.github.ishopping.order.model.OrderItem;
 import com.github.ishopping.order.model.PaymentData;
 import com.github.ishopping.order.model.enums.OrderStatus;
 import com.github.ishopping.order.model.enums.PaymentType;
@@ -11,8 +16,12 @@ import com.github.ishopping.order.repository.OrderRepository;
 import com.github.ishopping.order.validator.OrderValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -23,6 +32,8 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final OrderValidator orderValidator;
     private final BankServiceClient bankServiceClient;
+    private final ClientsClient apiClients;
+    private final ProductsClient apiProducts;
 
     @Transactional
     public Order createOrder(Order order) {
@@ -84,5 +95,32 @@ public class OrderService {
         order.setPaymentKey(newPaymentKey);
 
         orderRepository.save(order);
+    }
+
+    public Optional<Order> loadCompleteDataOrder(Long id) {
+        Optional<Order> order = orderRepository.findById(id);
+        order.ifPresent(this::loadDataClient);
+        order.ifPresent(this::loadItensOrder);
+
+        return order;
+    }
+
+    private void loadDataClient(Order order) {
+        Long clientId = order.getClientId();
+        ResponseEntity<ClientRepresentation> response = apiClients.getData(clientId);
+        order.setDataClient(response.getBody());
+    }
+
+    private void loadItensOrder(Order order) {
+        List<OrderItem> orderItems = orderItemRepository.findByOrder(order);
+        order.setItens(orderItems);
+        order.getItens().forEach(this::loadProductsData);
+
+    }
+
+    private void loadProductsData(OrderItem orderItem) {
+        Long id = orderItem.getId();
+        ResponseEntity<ProductRepresentation> response = apiProducts.getData(id);
+        orderItem.setProductName(response.getBody().name());
     }
 }
