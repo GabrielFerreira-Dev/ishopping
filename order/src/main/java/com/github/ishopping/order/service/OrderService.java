@@ -11,6 +11,7 @@ import com.github.ishopping.order.model.PaymentData;
 import com.github.ishopping.order.model.enums.OrderStatus;
 import com.github.ishopping.order.model.enums.PaymentType;
 import com.github.ishopping.order.model.exception.ItemNotFoundException;
+import com.github.ishopping.order.publisher.representation.PaymentPublisher;
 import com.github.ishopping.order.repository.OrderItemRepository;
 import com.github.ishopping.order.repository.OrderRepository;
 import com.github.ishopping.order.validator.OrderValidator;
@@ -34,6 +35,7 @@ public class OrderService {
     private final BankServiceClient bankServiceClient;
     private final ClientsClient apiClients;
     private final ProductsClient apiProducts;
+    private final PaymentPublisher paymentPublisher;
 
     @Transactional
     public Order createOrder(Order order) {
@@ -65,12 +67,19 @@ public class OrderService {
         Order order = orderFinded.get();
 
         if(success) {
-            order.setStatus(OrderStatus.PAID);
+            prepareAndPublishPaidOrder(order);
         } else {
             order.setStatus(OrderStatus.ERROR_PAYMENT);
             order.setObservation(observation);
         }
         orderRepository.save(order);
+    }
+
+    private void prepareAndPublishPaidOrder(Order order) {
+        order.setStatus(OrderStatus.PAID);
+        loadDataClient(order);
+        loadItensOrder(order);
+        paymentPublisher.publish(order);
     }
 
     @Transactional
