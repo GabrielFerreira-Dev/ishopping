@@ -26,7 +26,8 @@ public class OrderMapper {
 
     private OrderItem mapItem(DetailItemOrderRepresentation representation) {
         return new OrderItem(
-                representation.productId(), representation.productName(), representation.unitValue(), representation.quantity()
+                representation.productId(), representation.productName(), representation.unitValue(),
+                representation.quantity(), representation.total()
         );
     }
 }
