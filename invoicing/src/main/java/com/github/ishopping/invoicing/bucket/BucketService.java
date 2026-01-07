@@ -1,4 +1,4 @@
-package com.github.ishopping.invoicing.config.bucket;
+package com.github.ishopping.invoicing.bucket;
 
 import com.github.ishopping.invoicing.config.props.MinioProps;
 import io.minio.GetPresignedObjectUrlArgs;

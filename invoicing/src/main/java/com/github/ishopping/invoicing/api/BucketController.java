@@ -1,7 +1,7 @@
 package com.github.ishopping.invoicing.api;
 
-import com.github.ishopping.invoicing.config.bucket.BucketFile;
-import com.github.ishopping.invoicing.config.bucket.BucketService;
+import com.github.ishopping.invoicing.bucket.BucketFile;
+import com.github.ishopping.invoicing.bucket.BucketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

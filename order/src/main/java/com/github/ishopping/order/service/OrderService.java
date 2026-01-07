@@ -11,7 +11,7 @@ import com.github.ishopping.order.model.PaymentData;
 import com.github.ishopping.order.model.enums.OrderStatus;
 import com.github.ishopping.order.model.enums.PaymentType;
 import com.github.ishopping.order.model.exception.ItemNotFoundException;
-import com.github.ishopping.order.publisher.representation.PaymentPublisher;
+import com.github.ishopping.order.publisher.PaymentPublisher;
 import com.github.ishopping.order.repository.OrderItemRepository;
 import com.github.ishopping.order.repository.OrderRepository;
 import com.github.ishopping.order.validator.OrderValidator;
