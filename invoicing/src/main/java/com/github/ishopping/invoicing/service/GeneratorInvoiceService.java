@@ -1,9 +1,8 @@
-package com.github.ishopping.invoicing;
+package com.github.ishopping.invoicing.service;
 
 import com.github.ishopping.invoicing.bucket.BucketFile;
 import com.github.ishopping.invoicing.bucket.BucketService;
 import com.github.ishopping.invoicing.model.Order;
-import com.github.ishopping.invoicing.service.InvoiceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;

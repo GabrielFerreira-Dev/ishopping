@@ -1,7 +1,7 @@
 package com.github.ishopping.invoicing.subscriber;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ishopping.invoicing.GeneratorInvoiceService;
+import com.github.ishopping.invoicing.service.GeneratorInvoiceService;
 import com.github.ishopping.invoicing.mapper.OrderMapper;
 import com.github.ishopping.invoicing.model.Order;
 import com.github.ishopping.invoicing.subscriber.representation.DetailOrderRepresentation;
