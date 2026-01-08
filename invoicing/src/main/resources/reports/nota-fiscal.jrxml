@@ -1,0 +1,124 @@
+<!-- Created with Jaspersoft Studio version 7.0.2.final using JasperReports Library version 7.0.0 -->
+<jasperReport name="nota-fiscal" language="java" pageWidth="595" pageHeight="842"
+			  columnWidth="555" leftMargin="20" rightMargin="20"
+			  topMargin="20" bottomMargin="20"
+			  uuid="4c57712b-e417-432a-8afe-dd1542fa08e5">
+
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+
+	<!-- Parameters -->
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="cpf" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="numberAddress" class="java.lang.String"/>
+	<parameter name="district" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="phoneNumber" class="java.lang.String"/>
+	<parameter name="dataOrder" class="java.lang.String"/>
+	<parameter name="total" class="java.math.BigDecimal"/>
+	<parameter name="LOGO" class="java.lang.String"/>
+
+	<query language="sql"><![CDATA[]]></query>
+
+	<!-- Fields -->
+	<field name="productId" class="java.lang.Long"/>
+	<field name="productName" class="java.lang.String"/>
+	<field name="quantity" class="java.lang.Integer"/>
+	<field name="unitValue" class="java.math.BigDecimal"/>
+	<field name="total" class="java.math.BigDecimal"/>
+
+	<background splitType="Stretch"/>
+
+	<title height="79">
+		<element kind="image" x="180" y="0" width="200" height="79" onErrorType="Blank">
+			<expression><![CDATA[$P{LOGO}]]></expression>
+		</element>
+	</title>
+
+	<pageHeader height="45">
+		<element kind="staticText" x="2" y="7" width="550" height="30"
+				 fontSize="16" bold="true" hTextAlign="Center">
+			<text><![CDATA[Nota Fiscal]]></text>
+		</element>
+	</pageHeader>
+
+	<columnHeader height="115">
+
+		<element kind="textField" x="60" y="0" width="220" height="20">
+			<expression><![CDATA[$P{name}]]></expression>
+		</element>
+
+		<element kind="textField" x="330" y="0" width="222" height="20">
+			<expression><![CDATA[$P{cpf}]]></expression>
+		</element>
+
+		<element kind="textField" x="60" y="20" width="220" height="20">
+			<expression><![CDATA[$P{address}]]></expression>
+		</element>
+
+		<element kind="textField" x="330" y="20" width="50" height="20">
+			<expression><![CDATA[$P{numberAddress}]]></expression>
+		</element>
+
+		<element kind="textField" x="430" y="20" width="122" height="20">
+			<expression><![CDATA[$P{district}]]></expression>
+		</element>
+
+		<element kind="textField" x="60" y="40" width="220" height="20">
+			<expression><![CDATA[$P{email}]]></expression>
+		</element>
+
+		<element kind="textField" x="330" y="40" width="222" height="20">
+			<expression><![CDATA[$P{phoneNumber}]]></expression>
+		</element>
+
+		<element kind="textField" x="60" y="60" width="220" height="20">
+			<expression><![CDATA[$P{dataOrder}]]></expression>
+		</element>
+
+		<element kind="textField" x="330" y="60" width="222" height="20">
+			<expression><![CDATA[$P{total}]]></expression>
+		</element>
+
+	</columnHeader>
+
+	<detail>
+		<band height="20">
+			<element kind="textField" x="0" y="0" width="100" height="20">
+				<expression><![CDATA[$F{productId}]]></expression>
+			</element>
+
+			<element kind="textField" x="100" y="0" width="240" height="20">
+				<expression><![CDATA[$F{productName}]]></expression>
+			</element>
+
+			<element kind="textField" x="340" y="0" width="70" height="20">
+				<expression><![CDATA[$F{quantity}]]></expression>
+			</element>
+
+			<element kind="textField" x="410" y="0" width="70" height="20">
+				<expression><![CDATA[$F{unitValue}]]></expression>
+			</element>
+
+			<element kind="textField" x="480" y="0" width="70" height="20">
+				<expression><![CDATA[$F{total}]]></expression>
+			</element>
+		</band>
+	</detail>
+
+	<columnFooter height="20">
+		<element kind="textField" x="480" y="0" width="70" height="20">
+			<expression><![CDATA[$P{total}]]></expression>
+		</element>
+	</columnFooter>
+
+	<pageFooter height="62">
+		<element kind="textField" x="454" y="30" width="100" height="30">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="staticText" x="400" y="30" width="54" height="30">
+			<text><![CDATA[Gerada em:]]></text>
+		</element>
+	</pageFooter>
+
+</jasperReport>
