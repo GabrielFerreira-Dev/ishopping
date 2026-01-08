@@ -25,6 +25,7 @@ public class InvoiceService {
         try (InputStream inputStream = invoice.getInputStream()) {
 
             Map<String, Object> params = new HashMap<>();
+
             params.put("NOME", order.client().name());
             params.put("CPF", order.client().cpf());
             params.put("LOGRADOURO", order.client().address());
@@ -34,7 +35,7 @@ public class InvoiceService {
             params.put("TELEFONE", order.client().phoneNumber());
             params.put("DATA_PEDIDO", order.data());
             params.put("TOTAL_PEDIDO", order.total());
-            params.put("LOGO", logo.getInputStream());
+            params.put("LOGO", logo.getFile().getAbsolutePath());
 
             var dataSource = new JRBeanCollectionDataSource(order.items());
 
