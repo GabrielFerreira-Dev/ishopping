@@ -12,6 +12,7 @@ ishopping:
     kafka:
       topics:
         orders-paid: 'ishopping.orders-paid'
+        orders-invoiced: 'ishopping.orders-invoiced'
 
 server:
   port: 8083

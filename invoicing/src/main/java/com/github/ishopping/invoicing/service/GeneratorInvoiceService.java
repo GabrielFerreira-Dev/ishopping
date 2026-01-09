@@ -3,6 +3,7 @@ package com.github.ishopping.invoicing.service;
 import com.github.ishopping.invoicing.bucket.BucketFile;
 import com.github.ishopping.invoicing.bucket.BucketService;
 import com.github.ishopping.invoicing.model.Order;
+import com.github.ishopping.invoicing.publisher.InvoicePublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -17,6 +18,7 @@ public class GeneratorInvoiceService {
 
     private final InvoiceService invoiceService;
     private final BucketService bucketService;
+    private final InvoicePublisher invoicePublisher;
 
     public void generate(Order order) {
         log.info("Invoice generated for the order {}", order.id());
@@ -31,6 +33,10 @@ public class GeneratorInvoiceService {
             );
 
             bucketService.upload(file);
+
+            String url = bucketService.getUrl(nameFile);
+            invoicePublisher.publish(order, url);
+            log.info("Generated invoice: {}", nameFile);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
