@@ -18,7 +18,7 @@ public class InvoicingSubscriber {
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
-            topics = "${ishopping.config.kafka.topics.ishopping.orders-invoiced}")
+            topics = "${ishopping.config.kafka.topics.orders-invoiced}")
     public void listen(String json) {
         log.info("Receiving order for shipping: {}", json);
 
