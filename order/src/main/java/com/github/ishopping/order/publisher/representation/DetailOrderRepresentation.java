@@ -18,6 +18,8 @@ public record DetailOrderRepresentation(
         String dataOrder,
         BigDecimal total,
         OrderStatus status,
+        String urlInvoice,
+        String trackingCode,
         List<DetailItemOrderRepresentation> itens
 ) {
 }

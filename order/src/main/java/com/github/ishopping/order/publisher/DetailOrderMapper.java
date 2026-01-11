@@ -21,5 +21,7 @@ public interface DetailOrderMapper {
     @Mapping(source = "total" , target = "total")
     @Mapping(source = "status" , target = "status")
     @Mapping(source = "itens" , target = "itens")
+    @Mapping(source = "urlInvoice" , target = "urlInvoice")
+    @Mapping(source = "trackingCode" , target = "trackingCode")
     DetailOrderRepresentation map(Order order);
 }
