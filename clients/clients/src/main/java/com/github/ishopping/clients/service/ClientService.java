@@ -20,4 +20,9 @@ public class ClientService {
     public Optional<Client> getById(Long id) {
         return repository.findById(id);
     }
+
+    public void delete(Client client) {
+        client.setActive(false);
+        repository.save(client);
+    }
 }
