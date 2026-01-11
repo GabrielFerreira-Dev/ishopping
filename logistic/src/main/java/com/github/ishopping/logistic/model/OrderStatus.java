@@ -1,4 +1,4 @@
-package com.github.ishopping.logistic;
+package com.github.ishopping.logistic.model;
 
 public enum OrderStatus {
     INVOICED,
