@@ -22,4 +22,9 @@ public class Product {
 
     @Column(name = "active")
     private boolean active;
+
+    @PrePersist
+    private void prePersist() {
+        setActive(true);
+    }
 }

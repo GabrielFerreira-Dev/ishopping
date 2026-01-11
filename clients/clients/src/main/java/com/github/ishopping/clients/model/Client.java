@@ -36,4 +36,9 @@ public class Client {
     @Column(name = "active")
     private boolean active;
 
+    @PrePersist
+    private void prePersist() {
+        setActive(true);
+    }
+
 }
