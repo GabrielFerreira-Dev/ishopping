@@ -33,5 +33,7 @@ public class Client {
     @Column(name = "phone_number", precision = 20)
     private String phoneNumber;
 
+    @Column(name = "active")
+    private boolean active;
 
 }
