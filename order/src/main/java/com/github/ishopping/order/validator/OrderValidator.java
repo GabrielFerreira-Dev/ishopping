@@ -34,6 +34,10 @@ public class OrderValidator {
             ResponseEntity<ClientRepresentation> response = clientsClient.getData(id);
             ClientRepresentation client = response.getBody();
             log.info("Client ID {} found: {}", client.id(), client.name());
+
+            if(!client.active()) {
+                throw new ValidationException("active", "Inactive client!");
+            }
         } catch (FeignException.NotFound e) {
             var message = String.format("Client ID %d not found.", id);
             throw new ValidationException("clientId", message);
@@ -45,6 +49,10 @@ public class OrderValidator {
             ResponseEntity<ProductRepresentation> response = productsClient.getData(item.getProductId());
             ProductRepresentation product = response.getBody();
             log.info("Product ID {} found: {}", product.id(), product.name());
+
+            if(!product.active()) {
+                throw new ValidationException("active", "Inactive product!");
+            }
         } catch (FeignException.NotFound e) {
             var message = String.format("Item ID %d not found.", item.getProductId());
             throw new ValidationException("productId", message);
