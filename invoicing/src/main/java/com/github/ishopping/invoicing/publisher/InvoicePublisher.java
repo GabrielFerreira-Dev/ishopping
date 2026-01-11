@@ -3,7 +3,7 @@ package com.github.ishopping.invoicing.publisher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ishopping.invoicing.model.Order;
 import com.github.ishopping.invoicing.publisher.representation.OrderStatus;
-import com.github.ishopping.invoicing.publisher.representation.UpdateStatusPayment;
+import com.github.ishopping.invoicing.publisher.representation.UpdateOrderStatusPayment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +23,7 @@ public class InvoicePublisher {
 
     public void publish(Order order, String urlInvoice) {
         try {
-            var representation = new UpdateStatusPayment(
+            var representation = new UpdateOrderStatusPayment(
                     order.id(), OrderStatus.INVOICED, urlInvoice);
             String json = objectMapper.writeValueAsString(representation);
             kafkaTemplate.send(topic, "data", json);
