@@ -1,4 +1,5 @@
-package com.github.ishopping.invoicing.config;
+package com.github.ishopping.logistic.config;
+
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
-public class kafkaConfig {
+public class KafkaConfig {
 
 
     @Value("${spring.kafka.bootstrap-servers}")

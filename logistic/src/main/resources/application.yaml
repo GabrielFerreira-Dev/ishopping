@@ -1,3 +1,15 @@
 spring:
   application:
     name: logistic
+    kafka:
+      bootstrap-servers: 'http://localhost:29092'
+      consumer:
+        group-id: ishopping-logistic
+        auto-offset-reset: earliest
+
+ishopping:
+  config:
+    kafka:
+      topics:
+        orders-invoiced: 'ishopping.orders-invoiced'
+        orders-sent: 'ishopping.orders-sent'

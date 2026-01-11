@@ -12,7 +12,7 @@
 	<artifactId>logistic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>logistic</name>
-	<description>Simple logistic microsservice </description>
+	<description>Simple logistic microservice</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -49,8 +49,12 @@
 			<artifactId>spring-kafka-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>

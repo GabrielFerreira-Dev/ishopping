@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="invoicing" />
         <module name="services" />
+        <module name="logistic" />
       </profile>
       <profile name="Annotation profile for products" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -39,6 +40,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="clients" options="-parameters" />
       <module name="invoicing" options="-parameters" />
+      <module name="logistic" options="-parameters" />
       <module name="order" options="-parameters" />
       <module name="products" options="-parameters" />
       <module name="services" options="-parameters" />
