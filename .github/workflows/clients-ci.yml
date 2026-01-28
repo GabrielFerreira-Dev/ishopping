@@ -10,7 +10,7 @@ on:
   pull_request:
     branches: ["master", "main", "develop"]
     paths:
-      - "ishopping-services/services/clients/**"
+      - "ishopping-services/clients/**"
 
 jobs:
   build-test:
