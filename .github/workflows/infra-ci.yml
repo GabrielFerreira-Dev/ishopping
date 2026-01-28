@@ -2,9 +2,9 @@ name: Infra CI - IShopping Services
 
 on:
   push:
-    branches: ["master",  "main", "develop" ]
+    branches: ["master", "main", "develop"]
   pull_request:
-    branches: ["master",  "main", "develop" ]
+    branches: ["master", "main", "develop"]
 
 jobs:
   infra:
@@ -19,6 +19,14 @@ jobs:
 
       - name: Verify Docker Compose
         run: docker compose version
+
+      # ==========================
+      # ENV FILE (GLOBAL)
+      # ==========================
+      - name: Create shared .env
+        run: |
+          echo "POSTGRES_USER=postgres" >> ishopping-services/services/.env
+          echo "POSTGRES_PASSWORD=postgres" >> ishopping-services/services/.env
 
       # ==========================
       # BROKER (Kafka + Zookeeper)
@@ -53,11 +61,6 @@ jobs:
       # ==========================
       # DATABASE (Postgres)
       # ==========================
-      - name: Create Postgres .env
-        run: |
-          echo "POSTGRES_USER=postgres" >> ishopping-services/services/.env
-          echo "POSTGRES_PASSWORD=postgres" >> ishopping-services/services/.env
-
       - name: Validate docker-compose (database)
         run: docker compose -f ishopping-services/services/database/docker-compose.yml config
 
@@ -68,8 +71,7 @@ jobs:
         run: sleep 20
 
       - name: Test Postgres connection
-        run: |
-          docker exec db_ishopping pg_isready -U postgres
+        run: docker exec db_ishopping pg_isready -U postgres
 
       # ==========================
       # CLEANUP
