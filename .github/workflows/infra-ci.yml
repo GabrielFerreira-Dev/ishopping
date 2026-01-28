@@ -38,7 +38,7 @@ jobs:
         run: docker compose -f ishopping-services/services/broker/docker-compose.yml up -d
 
       - name: Wait Kafka to Rise
-        run: sleep 30
+        run: sleep 5
 
       - name: Verify brokers containers
         run: docker ps
@@ -53,7 +53,7 @@ jobs:
         run: docker compose -f ishopping-services/services/bucket/docker-compose.yml up -d
 
       - name: Wait MinIO to Rise
-        run: sleep 15
+        run: sleep 5
 
       - name: Healthcheck MinIO
         run: curl -f http://localhost:9000/minio/health/live
@@ -68,7 +68,7 @@ jobs:
         run: docker compose -f ishopping-services/services/database/docker-compose.yml up -d
 
       - name: Wait Postgres to rise
-        run: sleep 20
+        run: sleep 5
 
       - name: Test Postgres connection
         run: docker exec db_ishopping pg_isready -U postgres
