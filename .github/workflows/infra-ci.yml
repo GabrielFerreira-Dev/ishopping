@@ -1,0 +1,82 @@
+name: Infra CI - IShopping Services
+
+on:
+  push:
+    branches: ["master",  "main", "develop" ]
+  pull_request:
+    branches: ["master",  "main", "develop" ]
+
+jobs:
+  infra:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify Docker
+        run: docker --version
+
+      - name: Verify Docker Compose
+        run: docker compose version
+
+      # ==========================
+      # BROKER (Kafka + Zookeeper)
+      # ==========================
+      - name: Validate docker-compose (broker)
+        run: docker compose -f services/broker/docker-compose.yml config
+
+      - name: Rise broker
+        run: docker compose -f services/broker/docker-compose.yml up -d
+
+      - name: Wait Kafka to Rise
+        run: sleep 30
+
+      - name: Verify brokers containers
+        run: docker ps
+
+      # ==========================
+      # BUCKET (MinIO)
+      # ==========================
+      - name: Validate docker-compose (bucket)
+        run: docker compose -f services/bucket/docker-compose.yml config
+
+      - name: Rise MinIO
+        run: docker compose -f services/bucket/docker-compose.yml up -d
+
+      - name: Wait MinIO to Rise
+        run: sleep 15
+
+      - name: Healthcheck MinIO
+        run: curl -f http://localhost:9000/minio/health/live
+
+      # ==========================
+      # DATABASE (Postgres)
+      # ==========================
+      - name: Create Postgres .env
+        run: |
+          echo "POSTGRES_USER=postgres" >> services/database/.env
+          echo "POSTGRES_PASSWORD=postgres" >> services/database/.env
+
+      - name: Validate docker-compose (database)
+        run: docker compose -f services/database/docker-compose.yml config
+
+      - name: Rise Postgres
+        run: docker compose -f services/database/docker-compose.yml up -d
+
+      - name: Wait Postgres to rise
+        run: sleep 20
+
+      - name: Test Postgres connection
+        run: |
+          docker exec db_ishopping pg_isready -U postgres
+
+      # ==========================
+      # CLEANUP
+      # ==========================
+      - name: Down services
+        if: always()
+        run: |
+          docker compose -f services/broker/docker-compose.yml down
+          docker compose -f services/bucket/docker-compose.yml down
+          docker compose -f services/database/docker-compose.yml down
