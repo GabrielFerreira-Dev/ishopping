@@ -24,10 +24,10 @@ jobs:
       # BROKER (Kafka + Zookeeper)
       # ==========================
       - name: Validate docker-compose (broker)
-        run: docker compose -f services/broker/docker-compose.yml config
+        run: docker compose -f ishopping-services/services/broker/docker-compose.yml config
 
       - name: Rise broker
-        run: docker compose -f services/broker/docker-compose.yml up -d
+        run: docker compose -f ishopping-services/services/broker/docker-compose.yml up -d
 
       - name: Wait Kafka to Rise
         run: sleep 30
@@ -39,10 +39,10 @@ jobs:
       # BUCKET (MinIO)
       # ==========================
       - name: Validate docker-compose (bucket)
-        run: docker compose -f services/bucket/docker-compose.yml config
+        run: docker compose -f ishopping-services/services/bucket/docker-compose.yml config
 
       - name: Rise MinIO
-        run: docker compose -f services/bucket/docker-compose.yml up -d
+        run: docker compose -f ishopping-services/services/bucket/docker-compose.yml up -d
 
       - name: Wait MinIO to Rise
         run: sleep 15
@@ -55,14 +55,14 @@ jobs:
       # ==========================
       - name: Create Postgres .env
         run: |
-          echo "POSTGRES_USER=postgres" >> services/database/.env
-          echo "POSTGRES_PASSWORD=postgres" >> services/database/.env
+          echo "POSTGRES_USER=postgres" >> ishopping-services/services/.env
+          echo "POSTGRES_PASSWORD=postgres" >> ishopping-services/services/.env
 
       - name: Validate docker-compose (database)
-        run: docker compose -f services/database/docker-compose.yml config
+        run: docker compose -f ishopping-services/services/database/docker-compose.yml config
 
       - name: Rise Postgres
-        run: docker compose -f services/database/docker-compose.yml up -d
+        run: docker compose -f ishopping-services/services/database/docker-compose.yml up -d
 
       - name: Wait Postgres to rise
         run: sleep 20
@@ -77,6 +77,6 @@ jobs:
       - name: Down services
         if: always()
         run: |
-          docker compose -f services/broker/docker-compose.yml down
-          docker compose -f services/bucket/docker-compose.yml down
-          docker compose -f services/database/docker-compose.yml down
+          docker compose -f ishopping-services/services/broker/docker-compose.yml down
+          docker compose -f ishopping-services/services/bucket/docker-compose.yml down
+          docker compose -f ishopping-services/services/database/docker-compose.yml down
