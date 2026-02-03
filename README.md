@@ -23,7 +23,7 @@ This project was intentionally built to reflect **industry-grade architectural d
 
 ## 🏗️ Architecture Overview
 
-![Architecture Diagram](docs/architecture-flow.png)
+![Architecture Diagram](docs/architecture-flow.jpg)
 
 The system is composed of independent microservices that communicate through **domain events**. Each service reacts to events of interest, without a central orchestrator, ensuring autonomy and resilience.
 
